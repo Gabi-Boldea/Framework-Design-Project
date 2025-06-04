@@ -1,70 +1,79 @@
-# Getting Started with Create React App
+# React Hooks PoC
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 1  Introduction  
+For our Framework Design course I chose to build a small React-based proof-of-concept (PoC) application.  
+The goal is to spotlight React’s Hooks in a single, compact demo that is easy to inspect.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 2  What the App Does  
 
-### `npm start`
+| Feature                    | Key&nbsp;Hook(s)                                         | Behaviour |
+|----------------------------|----------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------|
+| **Counter + Title**        | `useState`, `useEffect`                                  | Increment / decrement buttons update the number and the browser-tab title.                                                    |
+| **Local-storage Counter**  | custom `useLocalStorage` <br>(`useState` + `useEffect`)  | Counter value survives full browser reloads.                                                                                  |
+| **Visibility Toggle**      | custom `useToggle` (`useState` wrapper)                  | Button shows or hides a message via a reusable boolean-state hook.                                                            |
+| **Dark / Light Theme**     | `createContext`, `useContext`, `useReducer`, `useEffect` | Global colour scheme stored in context and persisted to `localStorage`; switching flips a `data-theme` attribute on `<body>`. |
+| **Stopwatch**              | `useRef`, `useImperativeHandle`, `forwardRef`            | Ticks every second; parent component can imperatively reset it.                                                               |
+| **Fibonacci**              | `useMemo`, `useCallback`                                 | Expensive `fib(n)` is memoised; only recomputes when n changes.                                                               |
+| **Auto-resizing Textarea** | `useLayoutEffect`, `useRef`                              | Textarea grows automatically with its content.                                                                                |
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 3  Design Walkthrough  
+* A single white card is centred on a blue-grey gradient background.    
+* Dark-mode simply swaps CSS custom properties via a `data-theme` attribute on `<body>`.  
+* Each demo is isolated in its own component so you can open any file and focus on one concept at a time.
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 4  Folder Structure
+src/
+  components/
+    AutoResizeTextarea.jsx
+    HeavyCalc.jsx
+    Stopwatch.jsx
+    ThemeContext.jsx
+    ThemeToggle.jsx
+  hooks/
+    useLocalStorage.js
+    useToggle.js
+  App.jsx
+  App.css
+  index.js
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 5  Creation Process – Step by Step
+	1.	Scaffold the project with npx create-react-app; remove CRA boilerplate.
+	2.	Implement Counter using useState; sync the page title via useEffect.
+	3.	Add useToggle hook and a visibility-toggle button.
+	4.	Create ThemeContext with createContext + useReducer; persist theme in localStorage.
+	5.	Build Stopwatch using useRef; expose a reset() method through useImperativeHandle.
+	6.	Implement Fibonacci calculator; wrap heavy computation in useMemo, handlers in useCallback.
+	7.	Add Auto-resizing Textarea that measures scrollHeight inside useLayoutEffect.
+	8.	Extract useLocalStorage hook and replace plain useState in the counter to persist state.
+	9.	Style everything in one App.css, relying on CSS variables for theme switching.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 6  Installation & Running
 
-### `npm run eject`
+Prerequisites
+	•	Node.js ≥ 16
+	•	npm ≥ 8 (bundled with Node)
+	•	Git
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+ bash:
+#### 1  Clone the repository
+git clone https://github.com/<Gabi-Boldea>/my-react-hooks-poc.git
+cd my-react-hooks-poc
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### 2  Install dependencies
+npm install
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+#### 3  Start the development server
+npm start            # opens http://localhost:3000 with hot-reload
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+#### 4  (Optional) Build a production bundle
+npm run build        # outputs static files in /build
