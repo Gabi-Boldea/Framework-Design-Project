@@ -65,15 +65,15 @@ Prerequisites
 	•	Git
 
  bash:
-# 1  Clone the repository
+#### 1  Clone the repository
 git clone https://github.com/<your-user>/my-react-hooks-poc.git
 cd my-react-hooks-poc
 
-# 2  Install dependencies
+#### 2  Install dependencies
 npm install
 
-# 3  Start the development server
+#### 3  Start the development server
 npm start            # opens http://localhost:3000 with hot-reload
 
-# 4  (Optional) Build a production bundle
+#### 4  (Optional) Build a production bundle
 npm run build        # outputs static files in /build
